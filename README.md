@@ -1,6 +1,7 @@
 # Spotfire Sunburst Chart
 
 ## References
+- How to calculate SVG path for an arc of a circle https://stackoverflow.com/questions/5736398/how-to-calculate-the-svg-path-for-an-arc-of-a-circle
 - Data to Viz https://www.data-to-viz.com/graph/sunburst.html
 - Excel https://support.microsoft.com/en-us/office/create-a-sunburst-chart-in-office-4a127977-62cd-4c11-b8c7-65b84a358e0c
 - PowerBI https://appsource.microsoft.com/en-us/product/power-bi-visuals/wa104380767?tab=overview
