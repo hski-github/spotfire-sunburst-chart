@@ -3,8 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+
+function myFunction(){
+	
+	var radius = 20;
+	var start = convertDegreeToCoordinates(0, radius);
+	var end = convertDegreeToCoordinates(180, radius);
+	
+	var d = [
+		"M", start.x, start.y, "A", radius, radius, "0,0,1", end.x, end.y
+	].join(" ");
+	
+	var element = document.getElementById("p1");
+	element.setAttribute("d",d);
+	element.setAttribute("stroke","red");
+	
+}
+
+function convertDegreeToCoordinates(angleInDegrees, radius){
+	
+	var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
+
+	return {
+		x: Math.cos(angleInRadians)*radius,
+		y: Math.sin(angleInRadians)*radius
+	}
+	
+}
+</script>
 </head>
-<body>
+<body  onload="myFunction()">
 
 <p>
 <svg width="200" height="100" viewBox="-100 -50 200 100" style="background:lightgrey;">
@@ -24,6 +53,15 @@
 			 L -30,0 A 30,30 0,0,0 0,30 Z" fill="green" stroke="white"/>
  	<path d="M -20,0 A 20,20 0,0,1 0,-20
  			 L 0,-30 A 30,30 0,0,0 -30,0 Z" fill="blue" stroke="white"/>
+</svg>
+</p>
+
+<p>
+<svg width="200" height="100" viewBox="-100 -50 200 100" style="background:lightgrey;">
+	<circle cx="0" cy="0" r="2" fill="grey" />
+	<path id="p1"  fill="none"/>
+	<path id="p2" d="M 0,20 A 20,20 0,0,1 -20,0" fill="none" stroke="green"/>
+ 	<path d="M -20,0 A 20,20 0,0,1 0,-20" fill="none" stroke="blue"/>
 </svg>
 </p>
 
