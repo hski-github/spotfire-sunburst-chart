@@ -7,19 +7,23 @@
 
 function myFunction(){
 	
-	document.getElementById("p1").setAttribute("d", createDonutSlice(0,150,20) );
-	document.getElementById("p2").setAttribute("d", createDonutSlice(150,290,20) );
-	document.getElementById("p3").setAttribute("d", createDonutSlice(290,360,20) );
+	document.getElementById("p1").setAttribute("d", createDonutSlice(0,150,20,30) );
+	document.getElementById("p2").setAttribute("d", createDonutSlice(150,290,20,30) );
+	document.getElementById("p3").setAttribute("d", createDonutSlice(290,360,20,30) );
 	
 }
 
-function createDonutSlice(startDegree, endDegree, radius){
+function createDonutSlice(startDegree, endDegree, radius, outerRadius){
 		
 	var start = convertDegreeToCoordinates(startDegree, radius);
 	var end = convertDegreeToCoordinates(endDegree, radius);
 	
+	var outerStart = convertDegreeToCoordinates(startDegree, outerRadius);
+	var outerEnd = convertDegreeToCoordinates(endDegree, outerRadius);
+
 	var d = [
-		"M", start.x, start.y, "A", radius, radius, "0,0,1", end.x, end.y
+		"M", start.x, start.y, "A", radius, radius, "0,0,1", end.x, end.y,
+		"L", outerEnd.x, outerEnd.y, "A", outerRadius, outerRadius, "0,0,0", outerStart.x, outerStart.y, "Z"
 	].join(" ");
 	
 	return d; 
