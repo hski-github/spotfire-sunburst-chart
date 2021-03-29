@@ -7,11 +7,12 @@
 
 function myFunction(){
 	
-	document.getElementById("p1").setAttribute("d", createDonutSlice(0,150,20,30) );
-	document.getElementById("p2").setAttribute("d", createDonutSlice(150,290,20,30) );
-	document.getElementById("p3").setAttribute("d", createDonutSlice(290,360,20,30) );
-	document.getElementById("p4").setAttribute("d", createDonutSlice(0,150,30,40) );
-	document.getElementById("p5").setAttribute("d", createDonutSlice(150,360,30,40) );
+	document.getElementById("p0").setAttribute("d", createDonutSlice(0,100,30,40) );
+	document.getElementById("p1").setAttribute("d", createDonutSlice(100,150,30,40) );
+	document.getElementById("p2").setAttribute("d", createDonutSlice(150,290,30,40) );
+	document.getElementById("p3").setAttribute("d", createDonutSlice(290,360,30,40) );
+	document.getElementById("p4").setAttribute("d", createDonutSlice(0,150,20,30) );
+	document.getElementById("p5").setAttribute("d", createDonutSlice(150,360,20,30) );
 	
 }
 
@@ -71,11 +72,12 @@ function convertDegreeToCoordinates(angleInDegrees, radius){
 <p>
 <svg width="200" height="100" viewBox="-100 -50 200 100" style="background:lightgrey;">
 	<circle cx="0" cy="0" r="2" fill="grey" />
-	<path id="p1" fill="none" stroke="red"/>
-	<path id="p2" fill="none" stroke="green"/>
- 	<path id="p3" fill="none" stroke="blue"/>
-	<path id="p4" fill="none" stroke="orange"/>
- 	<path id="p5" fill="none" stroke="purple"/> 	
+	<path id="p0" fill="red" stroke="white"/>
+	<path id="p1" fill="red" stroke="white"/>
+	<path id="p2" fill="blue" stroke="white"/>
+ 	<path id="p3" fill="blue" stroke="white"/>
+	<path id="p4" fill="red" stroke="white"/>
+ 	<path id="p5" fill="blue" stroke="white"/> 	
 </svg>
 </p>
 
