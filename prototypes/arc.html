@@ -7,18 +7,22 @@
 
 function myFunction(){
 	
-	var radius = 20;
-	var start = convertDegreeToCoordinates(0, radius);
-	var end = convertDegreeToCoordinates(180, radius);
+	document.getElementById("p1").setAttribute("d", createDonutSlice(0,150,20) );
+	document.getElementById("p2").setAttribute("d", createDonutSlice(150,290,20) );
+	document.getElementById("p3").setAttribute("d", createDonutSlice(290,360,20) );
+	
+}
+
+function createDonutSlice(startDegree, endDegree, radius){
+		
+	var start = convertDegreeToCoordinates(startDegree, radius);
+	var end = convertDegreeToCoordinates(endDegree, radius);
 	
 	var d = [
 		"M", start.x, start.y, "A", radius, radius, "0,0,1", end.x, end.y
 	].join(" ");
 	
-	var element = document.getElementById("p1");
-	element.setAttribute("d",d);
-	element.setAttribute("stroke","red");
-	
+	return d; 
 }
 
 function convertDegreeToCoordinates(angleInDegrees, radius){
@@ -59,9 +63,9 @@ function convertDegreeToCoordinates(angleInDegrees, radius){
 <p>
 <svg width="200" height="100" viewBox="-100 -50 200 100" style="background:lightgrey;">
 	<circle cx="0" cy="0" r="2" fill="grey" />
-	<path id="p1"  fill="none"/>
-	<path id="p2" d="M 0,20 A 20,20 0,0,1 -20,0" fill="none" stroke="green"/>
- 	<path d="M -20,0 A 20,20 0,0,1 0,-20" fill="none" stroke="blue"/>
+	<path id="p1" fill="none" stroke="red"/>
+	<path id="p2" fill="none" stroke="green"/>
+ 	<path id="p3" fill="none" stroke="blue"/>
 </svg>
 </p>
 
