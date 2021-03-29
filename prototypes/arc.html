@@ -10,6 +10,8 @@ function myFunction(){
 	document.getElementById("p1").setAttribute("d", createDonutSlice(0,150,20,30) );
 	document.getElementById("p2").setAttribute("d", createDonutSlice(150,290,20,30) );
 	document.getElementById("p3").setAttribute("d", createDonutSlice(290,360,20,30) );
+	document.getElementById("p4").setAttribute("d", createDonutSlice(0,150,30,40) );
+	document.getElementById("p5").setAttribute("d", createDonutSlice(150,360,30,40) );
 	
 }
 
@@ -20,10 +22,12 @@ function createDonutSlice(startDegree, endDegree, radius, outerRadius){
 	
 	var outerStart = convertDegreeToCoordinates(startDegree, outerRadius);
 	var outerEnd = convertDegreeToCoordinates(endDegree, outerRadius);
+	
+	var largeArcFlag = endDegree - startDegree <= 180 ? "0" : "1";
 
 	var d = [
-		"M", start.x, start.y, "A", radius, radius, "0,0,1", end.x, end.y,
-		"L", outerEnd.x, outerEnd.y, "A", outerRadius, outerRadius, "0,0,0", outerStart.x, outerStart.y, "Z"
+		"M", start.x, start.y, "A", radius, radius, 0, largeArcFlag, 1, end.x, end.y,
+		"L", outerEnd.x, outerEnd.y, "A", outerRadius, outerRadius, 0, largeArcFlag, 0, outerStart.x, outerStart.y, "Z"
 	].join(" ");
 	
 	return d; 
@@ -70,6 +74,8 @@ function convertDegreeToCoordinates(angleInDegrees, radius){
 	<path id="p1" fill="none" stroke="red"/>
 	<path id="p2" fill="none" stroke="green"/>
  	<path id="p3" fill="none" stroke="blue"/>
+	<path id="p4" fill="none" stroke="orange"/>
+ 	<path id="p5" fill="none" stroke="purple"/> 	
 </svg>
 </p>
 
