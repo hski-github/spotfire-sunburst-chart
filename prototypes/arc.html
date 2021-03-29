@@ -7,24 +7,24 @@
 
 function myFunction(){
 	
-	document.getElementById("p0").setAttribute("d", createDonutSlice(0,100,30,45) );
-	document.getElementById("p1").setAttribute("d", createDonutSlice(100,150,30,45) );
-	document.getElementById("p2").setAttribute("d", createDonutSlice(150,290,30,45) );
-	document.getElementById("p3").setAttribute("d", createDonutSlice(290,360,30,45) );
-	document.getElementById("p4").setAttribute("d", createDonutSlice(0,150,15,30) );
-	document.getElementById("p5").setAttribute("d", createDonutSlice(150,360,15,30) );
+	document.getElementById("p0").setAttribute("d", createDonutSlice(0,35,30,45) );
+	document.getElementById("p1").setAttribute("d", createDonutSlice(35,60,30,45) );
+	document.getElementById("p2").setAttribute("d", createDonutSlice(60,90,30,45) );
+	document.getElementById("p3").setAttribute("d", createDonutSlice(90,100,30,45) );
+	document.getElementById("p4").setAttribute("d", createDonutSlice(0,60,15,30) );
+	document.getElementById("p5").setAttribute("d", createDonutSlice(60,100,15,30) );
 	
 }
 
-function createDonutSlice(startDegree, endDegree, radius, outerRadius){
+function createDonutSlice(startPercent, endPercent, radius, outerRadius){
 		
-	var start = convertDegreeToCoordinates(startDegree, radius);
-	var end = convertDegreeToCoordinates(endDegree, radius);
+	var start = convertPercentToCoordinates(startPercent, radius);
+	var end = convertPercentToCoordinates(endPercent, radius);
 	
-	var outerStart = convertDegreeToCoordinates(startDegree, outerRadius);
-	var outerEnd = convertDegreeToCoordinates(endDegree, outerRadius);
+	var outerStart = convertPercentToCoordinates(startPercent, outerRadius);
+	var outerEnd = convertPercentToCoordinates(endPercent, outerRadius);
 	
-	var largeArcFlag = endDegree - startDegree <= 180 ? "0" : "1";
+	var largeArcFlag = endPercent - startPercent <= 50 ? "0" : "1";
 
 	var d = [
 		"M", start.x, start.y, "A", radius, radius, 0, largeArcFlag, 1, end.x, end.y,
@@ -34,8 +34,9 @@ function createDonutSlice(startDegree, endDegree, radius, outerRadius){
 	return d; 
 }
 
-function convertDegreeToCoordinates(angleInDegrees, radius){
+function convertPercentToCoordinates(angleInPercent, radius){
 	
+	var angleInDegrees = angleInPercent/100*360;
 	var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
 
 	return {
