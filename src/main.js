@@ -103,13 +103,13 @@ Spotfire.initialize(async (mod) => {
 			
 			bar.forEach(function(barsegment, barsegmentlabel){
 
-				var rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
-				rect.setAttribute("x", i * 10);
-				rect.setAttribute("y", barheightcursor);
-				rect.setAttribute("width", 10);
-				rect.setAttribute("height", barsegment.height / bar.height * 100 );
-				rect.setAttribute("style", "fill: " + barsegment.color + "; stroke: white;");
-				svgmod.appendChild(rect);
+				var path = document.createElementNS("http://www.w3.org/2000/svg","path");
+				var d = createDonutSlice(barheightcursor, barheightcursor + barsegment.height / bar.height * 100, i*10+10, i*10+20);
+				path.setAttribute("d", d);
+				path.setAttribute("fill", barsegment.color);
+				path.setAttribute("stroke", "white");
+				svgmod.appendChild(path);
+
 				barheightcursor += barsegment.height / bar.height * 100 ;
 				
 			});
@@ -122,5 +122,39 @@ Spotfire.initialize(async (mod) => {
          * Signal that the mod is ready for export.
          */
         context.signalRenderComplete();
+
+
+
+		function createDonutSlice(startPercent, endPercent, radius, outerRadius){
+				
+			var start = convertPercentToCoordinates(startPercent, radius);
+			var end = convertPercentToCoordinates(endPercent, radius);
+			
+			var outerStart = convertPercentToCoordinates(startPercent, outerRadius);
+			var outerEnd = convertPercentToCoordinates(endPercent, outerRadius);
+			
+			var largeArcFlag = endPercent - startPercent <= 50 ? "0" : "1";
+		
+			var d = [
+				"M", start.x, start.y, "A", radius, radius, 0, largeArcFlag, 1, end.x, end.y,
+				"L", outerEnd.x, outerEnd.y, "A", outerRadius, outerRadius, 0, largeArcFlag, 0, outerStart.x, outerStart.y, "Z"
+			].join(" ");
+			
+			return d; 
+		}
+		
+		function convertPercentToCoordinates(angleInPercent, radius){
+			
+			var angleInDegrees = angleInPercent/100*360;
+			var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
+		
+			return {
+				x: Math.cos(angleInRadians)*radius,
+				y: Math.sin(angleInRadians)*radius
+			}
+			
+		}
+
+
     }
 });
