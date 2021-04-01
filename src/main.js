@@ -45,6 +45,7 @@ Spotfire.initialize(async (mod) => {
         }
         mod.controls.errorOverlay.hide();
 
+
         /**
          * Get rows from dataView
          */
@@ -55,13 +56,51 @@ Spotfire.initialize(async (mod) => {
             return;
         }
 
+		
+		/**
+		 * Create data structure for bars
+		 */
+		var cataxis = await dataView.categoricalAxis("X");
+		var cataxislevels = cataxis.hierarchy.levels;
+
+		var bars = new Array();
+		for(var i in cataxislevels){
+			var bar = new Map();
+			bar.height = 0;
+			rows.forEach(function(row){
+				var rowvalue = Number(row.continuous("Y").value());
+				var rowlabel = row.categorical("X").value();
+				
+				var rowlabelpart = rowlabel[i].formattedValue();
+				if ( !bar.has(rowlabelpart) ){ bar.set( rowlabelpart, { height: 0 } ); }
+				
+				bar.get(rowlabelpart).height += rowvalue;
+				bar.height += rowvalue;
+	
+				//TODO Check for negative bar values and show error
+				//TODO Check if sum of all barvalues is the same for all paths
+			});			
+			bars.push(bar);			
+		};
+
+
         /**
          * Print out to document
          */
         const container = document.querySelector("#mod-container");
         container.textContent = `windowSize: ${windowSize.width}x${windowSize.height}\r\n`;
         container.textContent += `should render: ${rows.length} rows\r\n`;
-        container.textContent += `${prop.name}: ${prop.value()}`;
+        container.textContent += `${prop.name}: ${prop.value()}` + "\r\n";
+
+		for(var i in bars){
+			var bar = bars[i];
+			container.textContent += "Layer " + i + "\r\n";
+			bar.forEach(function(barsegment, barsegmentlabel){
+				container.textContent += barsegmentlabel + " " + barsegment.height + "\r\n";
+			});
+						
+		}
+
 
         /**
          * Signal that the mod is ready for export.
