@@ -70,11 +70,13 @@ Spotfire.initialize(async (mod) => {
 			rows.forEach(function(row){
 				var rowvalue = Number(row.continuous("Y").value());
 				var rowlabel = row.categorical("X").value();
+				var rowcolor = row.color().hexCode;
 				
 				var rowlabelpart = rowlabel[i].formattedValue();
 				if ( !bar.has(rowlabelpart) ){ bar.set( rowlabelpart, { height: 0 } ); }
 				
 				bar.get(rowlabelpart).height += rowvalue;
+				bar.get(rowlabelpart).color = rowcolor;
 				bar.height += rowvalue;
 	
 				//TODO Check for negative bar values and show error
@@ -84,22 +86,36 @@ Spotfire.initialize(async (mod) => {
 		};
 
 
-        /**
-         * Print out to document
-         */
-        const container = document.querySelector("#mod-container");
-        container.textContent = `windowSize: ${windowSize.width}x${windowSize.height}\r\n`;
-        container.textContent += `should render: ${rows.length} rows\r\n`;
-        container.textContent += `${prop.name}: ${prop.value()}` + "\r\n";
 
+		/**
+		 * Clear SVG and set constants
+		 */	
+		var svgmod = document.querySelector("#mod-svg");
+		svgmod.innerHTML = "";
+
+
+		/**
+		 * Render SVG
+		 */
 		for(var i in bars){
 			var bar = bars[i];
-			container.textContent += "Layer " + i + "\r\n";
+			var barheightcursor = 0;
+			
 			bar.forEach(function(barsegment, barsegmentlabel){
-				container.textContent += barsegmentlabel + " " + barsegment.height + "\r\n";
+
+				var rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
+				rect.setAttribute("x", i * 10);
+				rect.setAttribute("y", barheightcursor);
+				rect.setAttribute("width", 10);
+				rect.setAttribute("height", barsegment.height / bar.height * 100 );
+				rect.setAttribute("style", "fill: " + barsegment.color + "; stroke: white;");
+				svgmod.appendChild(rect);
+				barheightcursor += barsegment.height / bar.height * 100 ;
+				
 			});
 						
 		}
+		
 
 
         /**
