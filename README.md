@@ -7,6 +7,7 @@
 - PowerBI https://appsource.microsoft.com/en-us/product/power-bi-visuals/wa104380767?tab=overview
 - D3 https://github.com/vasturiano/sunburst-chart
 - AnyChart https://www.anychart.com/products/anychart/gallery/Sunburst_Charts/
+- Plotly https://plotly.com/python/sunburst-charts/
 
 ## How to get started with development 
 All source code for the mod example can be found in the `src` folder. 
